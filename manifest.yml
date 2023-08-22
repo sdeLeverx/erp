@@ -1,0 +1,14 @@
+---
+applications:
+  - name: erp
+    path: srv/target/erp-exec.jar
+    random-route: true
+    buildpacks:
+      - java_buildpack
+    env:
+      JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 17.+ }}'
+      JBP_CONFIG_SPRING_AUTO_RECONFIGURATION: '{enabled: false}'
+      SPRING_PROFILES_ACTIVE: cloud
+    services:
+      - erp-hana
+      - erp-xsuaa

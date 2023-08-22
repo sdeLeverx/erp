@@ -1,0 +1,17 @@
+---
+spring:
+  config.activate.on-profile: default
+  sql.init.platform: h2
+cds:
+  datasource.auto-config.enabled: false
+  sql.supportedLocales: "*"
+  odata-v4.endpoint.path: "/api"
+  security:
+    mock:
+      users:
+        - name: user
+          password: user
+        - name: admin
+          password: admin
+          roles:
+            - Administrators
