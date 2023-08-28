@@ -35,7 +35,7 @@ After providing SAP HANA Cloud instance, added cds-feature-hana dependency and c
 Implicitly pushed all artifacts to the database.
 
 ```bash
-cds deploy --to hana:orders-hana --store-credentials
+cds deploy --to hana:erp-hana --store-credentials
 ```
 
 Follow these links for detailed explanation:
