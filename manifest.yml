@@ -5,10 +5,13 @@ applications:
     random-route: true
     buildpacks:
       - java_buildpack
+    JBP_CONFIG_JAVA_OPTS: "[java_opts: '-agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=n,onjcmd=y']"
     env:
+      JBP_CONFIG_SAP_MACHINE_JDK: "[default_debug_agent_active: true]"
       JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 17.+ }}'
       JBP_CONFIG_SPRING_AUTO_RECONFIGURATION: '{enabled: false}'
       SPRING_PROFILES_ACTIVE: cloud
     services:
       - erp-hana
       - erp-xsuaa
+      - erp-logs
