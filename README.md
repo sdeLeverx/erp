@@ -199,3 +199,11 @@ Please make sure to update tests as appropriate.
 ## Cloud Foundry
 
 [Project link on CF](https://erp-active-rabbit-hd.cfapps.us10-001.hana.ondemand.com)
+
+## Reference
+
+[Build a Business Application Using CAP for Java](https://developers.sap.com/mission.cap-java-app.html)
+
+[SAP Tutorial: App initialization, creating a model and API, manual API testing in CAP JAVA](https://medium.com/nerd-for-tech/sap-tutorial-complete-cap-java-part-1-fc1868c7bbba)
+
+[CAPire](https://cap.cloud.sap/docs/about/)
