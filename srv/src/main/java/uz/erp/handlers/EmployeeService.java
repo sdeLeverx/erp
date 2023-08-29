@@ -12,11 +12,14 @@ import com.sap.cds.services.ServiceException;
 import com.sap.cds.services.cds.CqnService;
 import com.sap.cds.services.handler.EventHandler;
 import com.sap.cds.services.handler.annotations.Before;
+import com.sap.cds.services.handler.annotations.On;
 import com.sap.cds.services.handler.annotations.ServiceName;
 import com.sap.cds.services.persistence.PersistenceService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import uz.erp.events.EmployeeEventContext;
+import cds.gen.employeeservice.GetAllDevicesOfEmployeeContext;;
 
 import java.util.List;
 
@@ -43,5 +46,28 @@ public class EmployeeService implements EventHandler {
             }
 
         }
+    }
+
+    @On(event = GetAllDevicesOfEmployeeContext.CDS_NAME, entity = Employee_.CDS_NAME)
+    public void reviewAction(EmployeeEventContext context) {
+        CqnSelect select = context.getCqn();
+        Employee employee = persistenceService.run(select).first(Employee.class)
+                .orElseThrow(() -> new ServiceException(ErrorStatuses.NOT_FOUND, "Employee does not exist"));
+
+        CqnSelect sel = Select.from(Device_.class).where(b -> b.employee_ID().eq(employee.getId()));
+        List<Device> devices = persistenceService.run(sel).listOf(Device.class);
+
+        // Should return list of devices. Still in process
+//
+//        if (devices != null ) {
+//            for (Device device : devices) {
+//                log.info("Device title " + device.getTitle());
+//            }
+//        }
+//
+//        assert devices != null;
+//        context.setResult(devices.get(0));
+
+        context.setCompleted();
     }
 }

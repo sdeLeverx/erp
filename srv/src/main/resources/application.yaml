@@ -6,6 +6,7 @@ cds:
   datasource.auto-config.enabled: false
   sql.supportedLocales: "*"
   odata-v4.endpoint.path: "/api"
+#  odata-v2.endpoint.path: "/api"
   security:
     mock:
       users:
