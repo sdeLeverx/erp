@@ -22,7 +22,7 @@ http://localhost:8080/api/EmployeeService/Device
 
 ## SAP HANA
 
-After providing SAP HANA Cloud instance, added cds-feature-hana dependency and configured the file .cdsrc.json in the root folder.
+After providing SAP HANA Cloud instance, add cds-feature-hana dependency and configure the file .cdsrc.json in the root folder.
 
 ```bash
 {
@@ -32,7 +32,7 @@ After providing SAP HANA Cloud instance, added cds-feature-hana dependency and c
 }
 ```
 
-Implicitly pushed all artifacts to the database.
+Implicitly push all artifacts to the database.
 
 ```bash
 cds deploy --to hana:erp-hana --store-credentials
@@ -87,10 +87,9 @@ First we should generate security descriptor.
 cds compile srv/ --to xsuaa > xs-security.json
 ```
 
-Updated application manifest.
+Update application manifest.
 
 ```bash
----
 ---
 applications:
   - name: erp
@@ -108,7 +107,7 @@ applications:
       - erp-logs
 ```
 
-Then, created instance of the Authorization and Trust Management Service
+Then, create instance of the Authorization and Trust Management Service
 
 ```bash
 cf create-service xsuaa application orders-xsuaa -c security/xs-security.json
