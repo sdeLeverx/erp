@@ -78,10 +78,12 @@ While enabling application for Cloud Foundry by adding the cds-starter-cloudfoun
   security:
     mock:
       users:
+        - name: user
+          password: user
         - name: admin
           password: admin
           roles:
-            - admin
+            - Administrators
 ```
 
 ## XSUAA for Cloud Foundry
