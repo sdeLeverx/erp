@@ -54,12 +54,15 @@ public class EmployeeService implements EventHandler {
         CqnSelect select = context.getCqn();
         Integer rate = context.getRate();
 
+        // check if the employee id exists before assigning device
         Employee employee = persistenceService.run(select).first(Employee.class)
                 .orElseThrow(() -> new ServiceException(ErrorStatuses.NOT_FOUND, "Employee does not exist"));
 
+        // get all devices of employee if exists
         CqnSelect sel = Select.from(Device_.class).where(b -> b.employee_ID().eq(employee.getId()));
         List<Device> devices = persistenceService.run(sel).listOf(Device.class);
 
+        // calculate amount in local currency
         if (devices != null && rate != null) {
             for (Device device : devices) {
                 log.info("Device title " + device.getTitle());
