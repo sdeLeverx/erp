@@ -6,6 +6,8 @@ import com.sap.cds.services.EventName;
 import cds.gen.employeeservice.Device;
 import cds.gen.employeeservice.GetAllDevicesOfEmployeeContext;
 
+import java.util.List;
+
 
 //@EventName("getAllDevicesOfEmployee")
 @EventName(GetAllDevicesOfEmployeeContext.CDS_NAME)
@@ -15,11 +17,11 @@ public interface EmployeeEventContext extends EventContext {
     CqnSelect getCqn();
     void setCqn(CqnSelect select);
 
-    // The 'id' input parameter
-    String getID();
-    void setID(String id);
+    // The 'rate' input parameter
+    Integer getRate();
+    void setRate(Integer id);
 
     // The return value
-    void setResult(Device device);
-    Device getResult();
+    void setResult(List<Device> devices);
+    List<Device> getResult();
 }

@@ -8,5 +8,5 @@ entity Device: cuid, managed {
   title   : String(100) @mandatory;
   price  : Decimal(9,2);
   currency : Currency;
-  // virtual currencyInSum : String(11) @Core.Computed: false;
+  virtual amountInLocalCurrency : Decimal(9,2);
 }

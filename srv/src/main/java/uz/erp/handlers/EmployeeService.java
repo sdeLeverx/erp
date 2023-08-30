@@ -21,6 +21,7 @@ import org.springframework.stereotype.Component;
 import uz.erp.events.EmployeeEventContext;
 import cds.gen.employeeservice.GetAllDevicesOfEmployeeContext;;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Slf4j
@@ -51,23 +52,21 @@ public class EmployeeService implements EventHandler {
     @On(event = GetAllDevicesOfEmployeeContext.CDS_NAME, entity = Employee_.CDS_NAME)
     public void reviewAction(EmployeeEventContext context) {
         CqnSelect select = context.getCqn();
+        Integer rate = context.getRate();
+
         Employee employee = persistenceService.run(select).first(Employee.class)
                 .orElseThrow(() -> new ServiceException(ErrorStatuses.NOT_FOUND, "Employee does not exist"));
 
         CqnSelect sel = Select.from(Device_.class).where(b -> b.employee_ID().eq(employee.getId()));
         List<Device> devices = persistenceService.run(sel).listOf(Device.class);
 
-        // Should return list of devices. Still in process
-//
-//        if (devices != null ) {
-//            for (Device device : devices) {
-//                log.info("Device title " + device.getTitle());
-//            }
-//        }
-//
-//        assert devices != null;
-//        context.setResult(devices.get(0));
+        if (devices != null && rate != null) {
+            for (Device device : devices) {
+                log.info("Device title " + device.getTitle());
+                device.setAmountInLocalCurrency(device.getPrice().multiply(BigDecimal.valueOf(rate)));
+            }
+        }
 
-        context.setCompleted();
+        context.setResult(devices);
     }
 }
