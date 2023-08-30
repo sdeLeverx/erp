@@ -14,12 +14,18 @@ mvn spring-boot:run
 
 ## Open local application
 
+---------------------
 http://localhost:8080
-
+---------------------
 http://localhost:8080/api/EmployeeService/Employee
-
+---------------------
 http://localhost:8080/api/EmployeeService/Device
-
+---------------------
+http://localhost:8080/api/EmployeeService/Employee(05a2e4fe-3e2e-4d76-bc9b-9c56732fd55d)/EmployeeService.getAllDevicesOfEmployee
+{ 
+    "rate": 12000
+}
+---------------------
 ## SAP HANA
 
 After providing SAP HANA Cloud instance, add cds-feature-hana dependency and configure the file .cdsrc.json in the root folder.
