@@ -15,3 +15,18 @@ applications:
       - erp-hana
       - erp-xsuaa
       - erp-logs
+  - name: approuter-saas-app
+    host: approuter_saas_app
+    path: approuter
+    buildpack: nodejs_buildpack
+    memory: 256M
+    env:
+      destinations: >
+        [
+          {
+            "name":"java",
+            "url":"https://java-grateful-toucan-ez.cfapps.us10-001.hana.ondemand.com/",
+            "forwardAuthToken": true
+          }
+        ]
+      TENANT_HOST_PATTERN: "^(.*)-web-generous-crane-ut.cfapps.us10-001.hana.ondemand.com"

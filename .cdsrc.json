@@ -2,7 +2,15 @@
     "build": {
         "target": "."
     },
-    "hana" : {
+    "hana": {
         "deploy-format": "hdbtable"
-    }
+    },
+    "requires": {
+        "auth": "xsuaa",
+        "multitenancy": true
+    },
+    "profiles": [
+        "with-mtx-sidecar",
+        "java"
+    ]
 }

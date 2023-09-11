@@ -50,9 +50,10 @@ public class EmployeeService implements EventHandler {
     }
 
     @On(event = GetAllDevicesOfEmployeeContext.CDS_NAME, entity = Employee_.CDS_NAME)
-    public void reviewAction(EmployeeEventContext context) {
+    public void getAllDevicesOfEmployee(EmployeeEventContext context) {
         CqnSelect select = context.getCqn();
         Integer rate = context.getRate();
+        String  employeeId = context.getEmployeeId();
 
         // check if the employee id exists before assigning device
         Employee employee = persistenceService.run(select).first(Employee.class)

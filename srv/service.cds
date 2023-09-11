@@ -9,7 +9,7 @@ service EmployeeService {
 
   entity Employee as projection on erp.Employee
     actions {
-        action getAllDevicesOfEmployee (rate: Integer) returns many Device;
+        action getAllDevicesOfEmployee (rate: Integer, employeeId: String) returns many Device;
       };
 
    @(restrict: [

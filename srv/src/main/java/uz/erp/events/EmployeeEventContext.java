@@ -21,6 +21,10 @@ public interface EmployeeEventContext extends EventContext {
     Integer getRate();
     void setRate(Integer id);
 
+    // The 'employeeId' input parameter
+    String getEmployeeId();
+    void setEmployeeId(String employeeId);
+
     // The return value
     void setResult(List<Device> devices);
     List<Device> getResult();

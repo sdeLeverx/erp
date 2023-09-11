@@ -1,10 +1,17 @@
 {
   "xsappname": "erp",
-  "tenant-mode": "dedicated",
+  "tenant-mode": "shared",
   "scopes": [
     {
       "name": "$XSAPPNAME.Administrators",
       "description": "Administrators"
+    },
+    {
+      "name":"$XSAPPNAME.Callback",
+      "description":"With this scope set, the callbacks for subscribe, unsubscribe and getDependencies can be called.",
+      "grant-as-authority-to-apps":[
+        "$XSAPPNAME(application,sap-provisioning,tenant-onboarding)"
+      ]
     }
   ],
   "attributes": [],
