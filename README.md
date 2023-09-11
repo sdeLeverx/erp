@@ -13,13 +13,18 @@ mvn spring-boot:run
 ```
 
 ## Open local application
-
+_____________________
 http://localhost:8080
-
+_____________________
 http://localhost:8080/api/EmployeeService/Employee
-
+_____________________
 http://localhost:8080/api/EmployeeService/Device
-
+_____________________
+http://localhost:8080/api/EmployeeService/Employee(05a2e4fe-3e2e-4d76-bc9b-9c56732fd55d)/EmployeeService.getAllDevicesOfEmployee
+{ 
+    "rate": 12000
+}
+_____________________
 ## SAP HANA
 
 After providing SAP HANA Cloud instance, add cds-feature-hana dependency and configure the file .cdsrc.json in the root folder.
@@ -73,10 +78,12 @@ While enabling application for Cloud Foundry by adding the cds-starter-cloudfoun
   security:
     mock:
       users:
+        - name: user
+          password: user
         - name: admin
           password: admin
           roles:
-            - admin
+            - Administrators
 ```
 
 ## XSUAA for Cloud Foundry
