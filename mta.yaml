@@ -4,6 +4,8 @@ version: 1.0.0-SNAPSHOT
 description: "A simple CAP project."
 parameters:
   enable-parallel-deployments: true
+
+  # --------------------- JAVA APPLICATION  ---------------------
 modules:
   - name: erp-srv
     type: java
@@ -25,6 +27,9 @@ modules:
         properties:
           srv-url: ${default-url}
     requires:
+      - name: app-api
+        properties:
+          CDS_MULTITENANCY_APPUI_URL: ~{url}
       - name: erp-auth
       - name: mtx-api
         properties:
@@ -32,34 +37,9 @@ modules:
           CDS_MULTITENANCY_SIDECAR_URL: ~{mtx-url}
       - name: erp-registry
       - name: erp-service-manager
-      - name: erp-db
-      - name: app-api
-        properties:
-          CDS_MULTITENANCY_APPUI_URL: ~{url}
 
-  - name: erp-mtx
-    type: nodejs
-    path: mtx/sidecar
-    requires:
-      - name: erp-auth
-      - name: erp-db
-      - name: erp-service-manager
-    build-parameters:
-      builder: custom
-      build-result: gen
-      commands:
-        - npm run build
-      requires:
-        - name: erp-srv
-    parameters:
-      memory: 256M
-      disk-quota: 512M
-    provides:
-      - name: mtx-api
-        properties:
-          mtx-url: ${default-url}
-
-  - name: erp
+  # --------------------- APPROUTER  ---------------------
+  - name: erp-approuter
     type: approuter.nodejs
     path: app/ # from cds.env.folders. Consider also cds.env.build.target -> gen/app
     parameters:
@@ -87,7 +67,30 @@ modules:
           url: ${default-url}
           domain: ${domain}
 
+  # --------------------- MTX SIDECAR APPLICATION ---------------------
+  - name: erp-mtx
+    type: nodejs
+    path: mtx/sidecar
+    requires:
+      - name: erp-auth
+      - name: erp-service-manager
+    build-parameters:
+      builder: custom
+      build-result: gen
+      commands:
+        - npm run build
+      requires:
+        - name: erp-srv
+    parameters:
+      memory: 256M
+      disk-quota: 512M
+    provides:
+      - name: mtx-api
+        properties:
+          mtx-url: ${default-url}
+
 resources:
+  # --------------------- XSUAA SERVICE ---------------------
   - name: erp-auth
     type: org.cloudfoundry.managed-service
     parameters:
@@ -99,9 +102,11 @@ resources:
         tenant-mode: shared
         oauth2-configuration:
           redirect-uris:
-            - https://*.~{approuter-app-api/domain}/**
-      requires:
-        - name: app-api
+            - https://*.~{app-api/domain}/**
+    requires:
+      - name: app-api
+
+  # --------------------- SAAS REGISTRY ---------------------
   - name: erp-registry
     type: org.cloudfoundry.managed-service
     requires:
@@ -122,11 +127,8 @@ resources:
           onUnSubscriptionAsync: true
           onUpdateDependenciesAsync: true
           callbackTimeoutMillis: 300000 # Increase if your deployments are taking longer than that
-  - name: erp-db
-    type: org.cloudfoundry.managed-service
-    parameters:
-      service: service-manager
-      service-plan: container
+
+  # --------------------- Service manager ---------------------
   - name: erp-service-manager
     type: org.cloudfoundry.managed-service
     parameters:

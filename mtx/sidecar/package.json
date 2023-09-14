@@ -13,7 +13,7 @@
   },
   "scripts": {
     "start": "cds-serve",
-    "build": "cds build ../.. --for mtx-sidecar --production && npm install --prefix gen"
+    "build": "cds build ../.. --for mtx-sidecar --production && cd gen && npm install"
   },
   "cds": {
     "profile": "mtx-sidecar"
